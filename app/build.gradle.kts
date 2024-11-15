@@ -37,9 +37,12 @@ android {
 }
 
 dependencies {
-    //FIREBASE DEPENDENCIES
+    // FIREBASE DEPENDENCIES
     implementation(platform(libs.firebase.bom))
+        // Authentification
     implementation("com.google.firebase:firebase-auth-ktx")
+        // Google
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

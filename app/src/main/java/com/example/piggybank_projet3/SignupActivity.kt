@@ -84,4 +84,8 @@ class SignupActivity : AppCompatActivity() {
                 }
             }
     }
+    // Google Signup
+    private fun signUpWithGoogle() {
+
+    }
 }
