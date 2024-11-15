@@ -4,12 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
+        android:id="@+id/backdroplogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:contentDescription="Backdrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputemail"
+        app:srcCompat="@drawable/backdrop_img" />
+
+    <TextView
+        android:id="@+id/tvlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/actor"
         android:text="LOGIN"
         android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,48 +34,62 @@
         app:layout_constraintVertical_bias="0.2" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/inputemail"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/actor"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/password"
-        app:layout_constraintEnd_toEndOf="@id/password"
+        app:layout_constraintBottom_toTopOf="@+id/inputpdw"
+        app:layout_constraintEnd_toEndOf="@id/inputpdw"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tvlogin" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/inputpdw"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/actor"
         android:hint="Password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/login_button"
+        app:layout_constraintBottom_toTopOf="@+id/Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/inputemail" />
 
     <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="196dp"
-        android:text="Se connecter"
+        android:id="@+id/Login"
+        android:layout_width="175dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/actor"
+        android:text="Login"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/inputpdw" />
 
-
-
+    <ImageView
+        android:id="@+id/imgpiggy"
+        android:layout_width="129dp"
+        android:layout_height="159dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginBottom="350dp"
+        android:contentDescription="Piggy Logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputemail"
+        app:srcCompat="@drawable/piggybank" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

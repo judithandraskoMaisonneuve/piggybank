@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    //FIREBASE DEPENDENCIES
+    implementation(libs.firebase.bom)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -45,11 +47,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.volley)
     implementation(libs.gson)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
 }

@@ -1,37 +1,26 @@
 {
   "project_info": {
-    "project_number": "370226948536",
-    "firebase_url": "https://projet-22de0-default-rtdb.firebaseio.com",
-    "project_id": "projet-22de0",
-    "storage_bucket": "projet-22de0.firebasestorage.app"
+    "project_number": "244965587208",
+    "project_id": "piggybank-b6a55",
+    "storage_bucket": "piggybank-b6a55.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:370226948536:android:05fbb1dbe956d655dd074d",
+        "mobilesdk_app_id": "1:244965587208:android:79faa7759704fa790f94bd",
         "android_client_info": {
           "package_name": "com.example.piggybank_projet3"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "370226948536-agdgoc2ij4ku8o8b364bglsn4ignktke.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC__pcet4dCawqr1vmBqVBNiyQcX7ZRW3M"
+          "current_key": "AIzaSyCxJxFsb2G_gndLY6N6v9c5cRQEjpF6XNU"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "370226948536-agdgoc2ij4ku8o8b364bglsn4ignktke.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
