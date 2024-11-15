@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/logo_piggy"
+        android:layout_width="100dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:rotation="15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/piggybank" />
+
+    <TextView
+        android:id="@+id/dashboard_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Dashboard"
+        android:textColor="#E48E9F"
+        android:textSize="48sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/goaltracker_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Goal Tracker"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="457dp" />
+
+    <TextView
+        android:id="@+id/expenses_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="250dp"
+        android:text="EXPENSES"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dashboard_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="150dp"
+        app:layout_constraintBottom_toTopOf="@+id/navbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goaltracker_title" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/navbar"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:cardBackgroundColor="#FD9DB0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" >
+
+        <ImageView
+            android:id="@+id/home_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:translationX="-150dp"
+            android:translationY="20dp"
+            app:srcCompat="@drawable/home" />
+
+        <ImageView
+            android:id="@+id/coin_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:translationX="-45dp"
+            android:translationY="20dp"
+            app:srcCompat="@drawable/coin" />
+
+        <ImageView
+            android:id="@+id/user_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:translationX="55dp"
+            android:translationY="20dp"
+            app:srcCompat="@drawable/user" />
+
+        <ImageView
+            android:id="@+id/settings_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:translationX="150dp"
+            android:translationY="20dp"
+            app:srcCompat="@drawable/settings" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
