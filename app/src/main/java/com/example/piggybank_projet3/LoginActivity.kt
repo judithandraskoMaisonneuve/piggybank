@@ -19,9 +19,9 @@ class LoginActivity : AppCompatActivity() {
         // Initialiser FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
-        val emailInput = findViewById<EditText>(R.id.inputEmail)
-        val passwordInput = findViewById<EditText>(R.id.inputPassword)
-        val loginButton = findViewById<Button>(R.id.btnlogin)
+        val emailInput = findViewById<EditText>(R.id.inputemail)
+        val passwordInput = findViewById<EditText>(R.id.inputpwd)
+        val loginButton = findViewById<Button>(R.id.Login)
 
         loginButton.setOnClickListener {
             val email = emailInput.text.toString()
@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
                             }
                         } else {
                             // Échec de la connexion
-                            Toast.makeText(this, "Connexion échouée, veuillez réessayer", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Signup failed try again later", Toast.LENGTH_SHORT).show()
                         }
                     }
             } else {

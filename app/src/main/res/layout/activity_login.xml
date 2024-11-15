@@ -44,14 +44,14 @@
         android:fontFamily="@font/actor"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/inputpdw"
-        app:layout_constraintEnd_toEndOf="@id/inputpdw"
+        app:layout_constraintBottom_toTopOf="@+id/inputpwd"
+        app:layout_constraintEnd_toEndOf="@id/inputpwd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvlogin" />
 
     <EditText
-        android:id="@+id/inputpdw"
+        android:id="@+id/inputpwd"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
@@ -76,7 +76,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputpdw" />
+        app:layout_constraintTop_toBottomOf="@+id/inputpwd" />
 
     <ImageView
         android:id="@+id/imgpiggy"
