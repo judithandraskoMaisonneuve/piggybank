@@ -38,7 +38,8 @@ android {
 
 dependencies {
     //FIREBASE DEPENDENCIES
-    implementation(libs.firebase.bom)
+    implementation(platform(libs.firebase.bom))
+    implementation("com.google.firebase:firebase-auth-ktx")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
