@@ -34,8 +34,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="428dp"
+        android:layout_marginBottom="9dp"
         android:text="GOALS"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/rvGoals"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.007"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,11 +75,11 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/navbar"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         app:cardBackgroundColor="#FD9DB0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/home_icon"
@@ -118,7 +120,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="300dp"
         android:layout_marginTop="-50dp"
+        android:layout_marginBottom="26dp"
         android:text="+"
+        app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.304"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,8 +130,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvExpenses"
-        android:layout_width="407dp"
-        android:layout_height="149dp"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,17 +159,31 @@
         android:text="INCOMES"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvExpenses" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvIncomes"
-        android:layout_width="409dp"
-        android:layout_height="218dp"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="1dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvIncomes" />
+
+    <Button
+        android:id="@+id/btnAddIncome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="-50dp"
+        android:layout_marginEnd="6dp"
+        android:text="+"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/goaltracker_title"
+        app:layout_constraintTop_toBottomOf="@+id/rvIncomes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
