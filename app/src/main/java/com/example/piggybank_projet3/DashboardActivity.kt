@@ -8,9 +8,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+
+data class Expense(val name: String, val amount: String)
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -18,6 +26,12 @@ class DashboardActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val goals = mutableListOf<Goal>()
     private lateinit var adapter: GoalAdapter
+    private lateinit var rvExpenses: RecyclerView
+    private lateinit var btnAddExpense: MaterialButton
+    private val expenses = mutableListOf<Expense>()
+    private lateinit var expenseAdapter: ExpenseAdapter
+
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,31 +44,90 @@ class DashboardActivity : AppCompatActivity() {
         rvGoals.layoutManager = LinearLayoutManager(this)
         rvGoals.adapter = adapter
 
-        loadGoalsFromFirestore()
-
         btnAddGoal.setOnClickListener {
             showAddGoalDialog()
         }
+
+        rvExpenses = findViewById(R.id.rvExpenses)
+        btnAddExpense = findViewById(R.id.btnAddExpense)
+
+        expenseAdapter = ExpenseAdapter(expenses)
+        rvExpenses.layoutManager = LinearLayoutManager(this)
+        rvExpenses.adapter = expenseAdapter
+
+        // Initialize Firebase Database reference
+        database = FirebaseDatabase.getInstance().getReference("expenses")
+
+        // Load existing expenses from Firebase
+        loadExpensesFromFirebase()
+
+        btnAddExpense.setOnClickListener {
+            showAddExpenseDialog()
+        }
+
     }
 
-    private fun loadGoalsFromFirestore() {
-        val userId = auth.currentUser?.uid ?: return
-
-        firestore.collection("Users")
-            .document(userId)
-            .collection("goals")
-            .get()
-            .addOnSuccessListener { result ->
-                goals.clear()
-                for (document in result) {
-                    val goal = document.toObject(Goal::class.java)
-                    goals.add(goal)
+    private fun loadExpensesFromFirebase() {
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                expenses.clear() // Clear current list to avoid duplicates
+                for (expenseSnapshot in snapshot.children) {
+                    val expense = expenseSnapshot.getValue(Expense::class.java)
+                    if (expense != null) {
+                        expenses.add(expense)
+                    }
                 }
-                adapter.notifyDataSetChanged()
+                expenseAdapter.notifyDataSetChanged() // Notify adapter of data change
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to load goals: ${e.message}", Toast.LENGTH_SHORT).show()
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@DashboardActivity, "Failed to load expenses", Toast.LENGTH_SHORT).show()
             }
+        })
+    }
+
+    private fun showAddExpenseDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_expense, null)
+        val expenseNameInput = dialogView.findViewById<EditText>(R.id.etExpenseName)
+        val expenseAmountInput = dialogView.findViewById<EditText>(R.id.etExpenseAmount)
+
+        AlertDialog.Builder(this)
+            .setTitle("Add Expense")
+            .setView(dialogView)
+            .setPositiveButton("Add") { _, _ ->
+                val name = expenseNameInput.text.toString().trim()
+                val amount = expenseAmountInput.text.toString().trim()
+
+                if (name.isNotEmpty() && amount.isNotEmpty()) {
+                    val formattedAmount = "$amount $ CAD"
+                    val expense = Expense(name, formattedAmount)
+
+                    // Save expense to local list
+                    expenses.add(expense)
+                    expenseAdapter.notifyDataSetChanged()
+
+                    // Save expense to Firebase
+                    saveExpenseToFirebase(expense)
+                } else {
+                    Toast.makeText(this, "Both fields must be filled", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+            .show()
+    }
+
+    private fun saveExpenseToFirebase(expense: Expense) {
+        val expenseId = database.push().key // Generate a unique key
+        if (expenseId != null) {
+            database.child(expenseId).setValue(expense)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Expense saved to Firebase", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Failed to save expense", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun showAddGoalDialog() {
