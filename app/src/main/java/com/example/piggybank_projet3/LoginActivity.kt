@@ -19,9 +19,9 @@ class LoginActivity : AppCompatActivity() {
         // Initialiser FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
-        val emailInput = findViewById<EditText>(R.id.inputEmail)
-        val passwordInput = findViewById<EditText>(R.id.inputPassword)
-        val loginButton = findViewById<Button>(R.id.btnlogin)
+        val emailInput = findViewById<EditText>(R.id.inputemail)
+        val passwordInput = findViewById<EditText>(R.id.inputpwd)
+        val loginButton = findViewById<Button>(R.id.Login)
 
         loginButton.setOnClickListener {
             val email = emailInput.text.toString()
@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
                             // Connexion réussie, naviguer vers MainActivity
                             val user = auth.currentUser
                             if (user != null) {
-                                val intent = Intent(this, MainActivity::class.java)
+                                val intent = Intent(this, DashboardActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
