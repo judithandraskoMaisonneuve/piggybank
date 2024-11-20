@@ -16,37 +16,42 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Initialiser FirebaseAuth
+        // Initialize FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
         val emailInput = findViewById<EditText>(R.id.inputemail)
         val passwordInput = findViewById<EditText>(R.id.inputpwd)
         val loginButton = findViewById<Button>(R.id.Login)
 
+        // Set login button click listener
         loginButton.setOnClickListener {
-            val email = emailInput.text.toString()
+            val email = emailInput.text.toString().trim()
             val password = passwordInput.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                // Authentifier l'utilisateur avec Firebase
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Connexion réussie, naviguer vers MainActivity
-                            val user = auth.currentUser
-                            if (user != null) {
-                                val intent = Intent(this, DashboardActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
-                        } else {
-                            // Échec de la connexion
-                            Toast.makeText(this, "Connexion échouée, veuillez réessayer", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                signInUser(email, password)
             } else {
-                Toast.makeText(this, "Veuillez saisir un email et un mot de passe", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun signInUser(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Login successful
+                    navigateToDashboard()
+                } else {
+                    // Login failed
+                    Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun navigateToDashboard() {
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
+        finish() // Prevent returning to LoginActivity
     }
 }

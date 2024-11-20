@@ -115,7 +115,7 @@ class SignupActivity : AppCompatActivity() {
                     if (user != null) {
                         createUserInFirestore(user.uid, user.email ?: "", "", "")
                     }
-                    Toast.makeText(this, "Google Sign-In successful!", Toast.LENGTH_SHORT).show()
+                    navigateToDashboard()
                 } else {
                     Toast.makeText(this, "Google sign-in failed", Toast.LENGTH_SHORT).show()
                 }
@@ -130,7 +130,7 @@ class SignupActivity : AppCompatActivity() {
                     if (user != null) {
                         createUserInFirestore(user.uid, email, firstname, lastname)
                     }
-                    Toast.makeText(this, "Signup successful!", Toast.LENGTH_SHORT).show()
+                    navigateToDashboard()
                 } else {
                     Toast.makeText(this, "Signup failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -171,5 +171,12 @@ class SignupActivity : AppCompatActivity() {
     private fun isPasswordValid(password: String): Boolean {
         val passwordPattern = Regex("^(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}$")
         return passwordPattern.matches(password)
+    }
+
+    // Navigate to DashBoardActivity
+    private fun navigateToDashboard() {
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
+        finish() // Prevent user from returning to the signup activity
     }
 }
