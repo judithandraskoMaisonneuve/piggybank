@@ -29,7 +29,7 @@
         android:layout_width="129dp"
         android:layout_height="159dp"
         android:layout_marginStart="220dp"
-        android:layout_marginBottom="330dp"
+        android:layout_marginBottom="360dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/signuptitle" />
 
     <!-- Firstname Input -->
     <EditText
@@ -169,7 +169,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnSignup" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/signuptitle"
         android:layout_width="313dp"
         android:layout_height="133dp"
         android:layout_marginStart="49dp"
