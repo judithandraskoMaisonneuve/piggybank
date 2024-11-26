@@ -1,132 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <ImageView
         android:id="@+id/logo_piggy"
-        android:layout_width="100dp"
-        android:layout_height="107dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:rotation="15"
+        android:layout_width="77dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/piggybank" />
 
     <TextView
-        android:id="@+id/dashboard_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="Dashboard"
-        android:textColor="#E48E9F"
-        android:textSize="48sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/goaltracker_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="428dp"
-        android:layout_marginBottom="9dp"
-        android:text="GOALS"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/rvGoals"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.007"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expenses_title" />
-
-    <TextView
-        android:id="@+id/expenses_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="250dp"
-        android:text="EXPENSES"
+        android:text="GOALS"
+        android:textColor="#fd9db0"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashboard_title" />
+        app:layout_constraintTop_toBottomOf="@+id/rvExpenses" />
+
+    <ImageButton
+        android:id="@+id/btnAddGoal"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="add goal button"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_plus_teal"
+        app:layout_constraintBottom_toBottomOf="@+id/goaltracker_title"
+        app:layout_constraintStart_toEndOf="@+id/goaltracker_title"
+        app:layout_constraintTop_toTopOf="@+id/goaltracker_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGoals"
         android:layout_width="0dp"
         android:layout_height="160dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goaltracker_title"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/goaltracker_title" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/navbar"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        app:cardBackgroundColor="#FD9DB0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/home_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:translationX="-150dp"
-            android:translationY="20dp"
-            app:srcCompat="@drawable/home" />
-
-        <ImageView
-            android:id="@+id/coin_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:translationX="-45dp"
-            android:translationY="20dp"
-            app:srcCompat="@drawable/coin" />
-
-        <ImageView
-            android:id="@+id/user_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:translationX="55dp"
-            android:translationY="20dp"
-            app:srcCompat="@drawable/user" />
-
-        <ImageView
-            android:id="@+id/settings_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:translationX="150dp"
-            android:translationY="20dp"
-            app:srcCompat="@drawable/settings" />
-    </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/btnAddGoal"
+    <TextView
+        android:id="@+id/expenses_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="-50dp"
-        android:layout_marginBottom="26dp"
-        android:text="+"
-        app:layout_constraintBottom_toTopOf="@+id/navbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.304"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="EXPENSES"
+        android:textColor="#fd9db0"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvGoals" />
+        app:layout_constraintTop_toBottomOf="@+id/rvIncomes" />
+
+    <ImageButton
+        android:id="@+id/btnAddExpense"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="add expense button"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_plus_teal"
+        app:layout_constraintBottom_toBottomOf="@+id/expenses_title"
+        app:layout_constraintStart_toEndOf="@+id/expenses_title"
+        app:layout_constraintTop_toTopOf="@+id/expenses_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvExpenses"
@@ -135,55 +83,107 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/expenses_title" />
-
-    <Button
-        android:id="@+id/btnAddExpense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="-50dp"
-        android:text="+"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvExpenses" />
 
     <TextView
         android:id="@+id/tvIncomes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="352dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:text="INCOMES"
+        android:textColor="#fd9db0"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvExpenses" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageButton
+        android:id="@+id/btnAddIncome"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_plus_teal"
+        app:layout_constraintBottom_toBottomOf="@+id/tvIncomes"
+        app:layout_constraintStart_toEndOf="@+id/tvIncomes"
+        app:layout_constraintTop_toTopOf="@+id/tvIncomes"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvIncomes"
         android:layout_width="0dp"
         android:layout_height="160dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvIncomes" />
 
-    <Button
-        android:id="@+id/btnAddIncome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="-50dp"
-        android:layout_marginEnd="6dp"
-        android:text="+"
+    <LinearLayout
+        android:id="@+id/navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="#fd9db0"
+        android:paddingHorizontal="12dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_home"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_home_white"
+            android:scaleType="fitCenter"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_goals"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_goal_white"
+            android:scaleType="fitCenter"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_analysis"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_graph_white"
+            android:scaleType="fitCenter"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_settings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_settings_white"
+            android:scaleType="fitCenter"
+            app:tint="@android:color/white" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="324dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="90dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/goaltracker_title"
-        app:layout_constraintTop_toBottomOf="@+id/rvIncomes" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/slogan_dashboard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

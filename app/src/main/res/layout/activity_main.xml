@@ -40,6 +40,8 @@
             android:shadowDx="2"
             android:shadowDy="3"
             android:text="Signup"
+            android:backgroundTint="#F1F3F4"
+            android:textColor="#000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/backdrop" />
@@ -51,6 +53,8 @@
             android:layout_marginTop="80dp"
             android:elevation="4dp"
             android:text="Login"
+            android:backgroundTint="#009688"
+            android:textColor="#FFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnsignup" />
@@ -77,7 +81,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/piggybank_title" />
+            app:srcCompat="@drawable/piggybank_title_new" />
 
         <ImageView
             android:id="@+id/piggybanklogo"

@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/actor"
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="@id/inputpwd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvlogin" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
         android:id="@+id/inputpwd"
@@ -73,6 +73,8 @@
         android:fontFamily="@font/actor"
         android:text="Login"
         android:textSize="20sp"
+        android:backgroundTint="#009688"
+        android:textColor="#FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +92,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputemail"
         app:srcCompat="@drawable/piggybank" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="334dp"
+        android:layout_height="149dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="118dp"
+        android:layout_marginEnd="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_title" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

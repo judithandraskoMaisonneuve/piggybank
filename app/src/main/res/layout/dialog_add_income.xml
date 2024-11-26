@@ -7,24 +7,24 @@
     android:spacing="8dp"
     android:layout_gravity="center">
 
-    <!-- Expense Name -->
+    <!-- Income Name -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/expense_name_input"
+            android:id="@+id/income_name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Expense Name"
+            android:hint="Income Name"
             android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Expense Date with DatePicker -->
+    <!-- Income Date with DatePicker -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/expense_date_input"
+            android:id="@+id/income_date_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date (e.g., 2024-12-31)"
@@ -33,12 +33,12 @@
             android:clickable="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Expense Amount -->
+    <!-- Income Amount -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/expense_amount_input"
+            android:id="@+id/income_amount_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Amount"

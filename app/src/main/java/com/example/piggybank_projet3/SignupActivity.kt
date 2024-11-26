@@ -42,11 +42,6 @@ class SignupActivity : AppCompatActivity() {
         val btnSignup = findViewById<Button>(R.id.btnSignup)
         val btnGoogleSignup = findViewById<Button>(R.id.btnSignupGoogle)
 
-        // Animation
-        val logo = findViewById<ImageView>(R.id.imgvLogoNoBG)
-        val rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate)
-        logo.startAnimation(rotateAnimation)
-
         // Set up the sign-up button click listener
         btnSignup.setOnClickListener {
             val email = inputEmail.text.toString().trim()

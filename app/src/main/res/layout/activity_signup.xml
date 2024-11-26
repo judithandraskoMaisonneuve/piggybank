@@ -25,24 +25,22 @@
     <!-- Email Input -->
 
     <ImageView
-        android:id="@+id/imgvLogoNoBG"
-        android:layout_width="220dp"
-        android:layout_height="231dp"
-        android:layout_marginTop="24dp"
-        android:contentDescription="Logo"
-        app:layout_constraintBottom_toTopOf="@+id/inputEmail"
+        android:id="@+id/piggylogo"
+        android:layout_width="129dp"
+        android:layout_height="159dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginBottom="330dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/piggybank_logo" />
+        app:srcCompat="@drawable/piggybank" />
 
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="32dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/actor"
@@ -51,7 +49,7 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgvLogoNoBG" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <!-- Firstname Input -->
     <EditText
@@ -169,4 +167,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignup" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="313dp"
+        android:layout_height="133dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="118dp"
+        android:layout_marginEnd="49dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/signup_title" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
