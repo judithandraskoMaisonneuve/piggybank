@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,7 +16,7 @@ class IncomeAdapter(
     class IncomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val incomeName: TextView = view.findViewById(R.id.income_name)
         private val incomeAmount: TextView = view.findViewById(R.id.income_amount)
-        private val deleteButton: Button = view.findViewById(R.id.delete_button)
+        private val deleteButton: ImageButton = view.findViewById(R.id.btndelete_income)
 
         // Liaison des données à la vue
         fun bind(income: Income, onDelete: (Int) -> Unit) {

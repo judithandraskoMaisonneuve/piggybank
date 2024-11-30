@@ -3,7 +3,9 @@ package com.example.piggybank_projet3
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -14,6 +16,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import android.widget.Spinner
+
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -24,6 +30,8 @@ class DashboardActivity : AppCompatActivity() {
     private val expenses = mutableListOf<Expense>()
     private val incomes = mutableListOf<Income>()
 
+    private val repository = FirestoreRepository()
+
     private lateinit var goalAdapter: GoalAdapter
     private lateinit var expenseAdapter: ExpenseAdapter
     private lateinit var incomeAdapter: IncomeAdapter
@@ -31,6 +39,8 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+
 
         // Goals RecyclerView
         val rvGoals = findViewById<RecyclerView>(R.id.rvGoals)
@@ -57,9 +67,11 @@ class DashboardActivity : AppCompatActivity() {
         rvIncomes.adapter = incomeAdapter
 
         // Load data
-        loadGoalsFromFirestore()
-        loadExpensesFromFirestore()
-        loadIncomesFromFirestore()
+        lifecycleScope.launch {
+            loadGoals()
+            loadExpenses()
+            loadIncomes()
+        }
 
         // Add button actions
         btnAddGoal.setOnClickListener { showAddGoalDialog() }
@@ -67,64 +79,31 @@ class DashboardActivity : AppCompatActivity() {
         btnAddIncome.setOnClickListener { showAddIncomeDialog() }
     }
 
-    private fun loadGoalsFromFirestore() {
-        val userId = auth.currentUser?.uid ?: return
-
-        firestore.collection("Users")
-            .document(userId)
-            .collection("goals")
-            .get()
-            .addOnSuccessListener { result ->
-                goals.clear()
-                for (document in result) {
-                    val goal = document.toObject(Goal::class.java).copy(id_goal = document.id)
-                    goals.add(goal)
-                }
-                goalAdapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to load goals: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    private suspend fun loadGoals() {
+        val newGoals = repository.getGoals()
+        if (newGoals != goals) {
+            goals.clear()
+            goals.addAll(newGoals)
+            goalAdapter.notifyDataSetChanged()
+        }
     }
 
-    private fun loadExpensesFromFirestore() {
-        val userId = auth.currentUser?.uid ?: return
-
-        firestore.collection("Users")
-            .document(userId)
-            .collection("expenses")
-            .get()
-            .addOnSuccessListener { result ->
-                expenses.clear()
-                for (document in result) {
-                    val expense = document.toObject(Expense::class.java).copy(id_expense = document.id)
-                    expenses.add(expense)
-                }
-                expenseAdapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to load expenses: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    private suspend fun loadExpenses() {
+        val newExpenses = repository.getExpenses()
+        if (newExpenses != expenses) {
+            expenses.clear()
+            expenses.addAll(newExpenses)
+            expenseAdapter.notifyDataSetChanged()
+        }
     }
 
-    private fun loadIncomesFromFirestore() {
-        val userId = auth.currentUser?.uid ?: return
-
-        firestore.collection("Users")
-            .document(userId)
-            .collection("incomes")
-            .get()
-            .addOnSuccessListener { result ->
-                incomes.clear()
-                for (document in result) {
-                    val income = document.toObject(Income::class.java).copy(id_income = document.id)
-                    incomes.add(income)
-                }
-                incomeAdapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to load incomes: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    private suspend fun loadIncomes() {
+        val newIncomes = repository.getIncomes()
+        if (newIncomes != incomes) {
+            incomes.clear()
+            incomes.addAll(newIncomes)
+            incomeAdapter.notifyDataSetChanged() // Make sure to update the adapter
+        }
     }
 
     private fun showAddGoalDialog() {
@@ -158,18 +137,20 @@ class DashboardActivity : AppCompatActivity() {
         val expenseNameInput = dialogView.findViewById<EditText>(R.id.expense_name_input)
         val expenseDateInput = dialogView.findViewById<EditText>(R.id.expense_date_input)
         val expenseAmountInput = dialogView.findViewById<EditText>(R.id.expense_amount_input)
+        val categorySpinner = dialogView.findViewById<Spinner>(R.id.expense_category_spinner)
+        val customCategoryLayout = dialogView.findViewById<View>(R.id.custom_category_input_layout)
+        val customCategoryInput = dialogView.findViewById<EditText>(R.id.custom_category_input)
 
-        // Set the current date as the default date
+        // Set default date
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         expenseDateInput.setText(currentDate)
 
-        // Open DatePicker when the user taps on the date input field
+        // Date picker
         expenseDateInput.setOnClickListener {
             val calendar = Calendar.getInstance()
             val datePickerDialog = DatePickerDialog(
                 this,
                 { _, year, month, dayOfMonth ->
-                    // Format the selected date as yyyy-MM-dd
                     val selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
                     expenseDateInput.setText(selectedDate)
                 },
@@ -180,6 +161,25 @@ class DashboardActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
+        // Set up category spinner with predefined and custom options
+        val categories = listOf("Utilities", "Fun", "Food", "Transportation", "Other", "Add Custom")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        categorySpinner.adapter = adapter
+
+        categorySpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // Show custom input field if "Add Custom" is selected
+                customCategoryLayout.visibility =
+                    if (categories[position] == "Add Custom") View.VISIBLE else View.GONE
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                customCategoryLayout.visibility = View.GONE
+            }
+        })
+
+        // Show the dialog
         AlertDialog.Builder(this)
             .setTitle("Add Expense")
             .setView(dialogView)
@@ -187,9 +187,15 @@ class DashboardActivity : AppCompatActivity() {
                 val name = expenseNameInput.text.toString()
                 val date = expenseDateInput.text.toString()
                 val amount = expenseAmountInput.text.toString().toDoubleOrNull()
+                val selectedCategory = if (categorySpinner.selectedItem.toString() == "Add Custom") {
+                    customCategoryInput.text.toString().takeIf { it.isNotEmpty() }
+                        ?: "Other"
+                } else {
+                    categorySpinner.selectedItem.toString()
+                }
 
-                if (name.isNotEmpty() && date.isNotEmpty() && amount != null) {
-                    val newExpense = Expense("", name, date, amount)
+                if (name.isNotEmpty() && date.isNotEmpty() && amount != null && selectedCategory.isNotEmpty()) {
+                    val newExpense = Expense("", name, date, selectedCategory, amount)
                     saveExpenseToFirestore(newExpense)
                 } else {
                     Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
@@ -198,6 +204,7 @@ class DashboardActivity : AppCompatActivity() {
             .setNegativeButton("Cancel", null)
             .show()
     }
+
 
     private fun showAddIncomeDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_income, null)

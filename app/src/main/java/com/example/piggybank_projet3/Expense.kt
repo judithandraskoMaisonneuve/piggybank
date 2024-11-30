@@ -4,5 +4,6 @@ data class Expense(
     val id_expense: String = "",
     val name: String = "",
     val date: String = "",
+    val category: String = "",
     val amount: Double = 0.0
 )
