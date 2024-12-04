@@ -3,10 +3,8 @@ package com.example.piggybank_projet3
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -170,7 +168,7 @@ class SignupActivity : AppCompatActivity() {
 
     // Navigate to DashBoardActivity
     private fun navigateToDashboard() {
-        val intent = Intent(this, DashboardActivity::class.java)
+        val intent = Intent(this, FragmentHolderActivity::class.java)
         startActivity(intent)
         finish() // Prevent user from returning to the signup activity
     }

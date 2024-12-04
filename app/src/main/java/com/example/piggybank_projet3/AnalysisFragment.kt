@@ -1,45 +1,45 @@
 package com.example.piggybank_projet3
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
 import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AnalysisFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AnalysisFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private val repository = FirestoreRepository()
 
+    private lateinit var pieChart: PieChart
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
 
         lifecycleScope.launch {
-            val goals = repository.getGoals()
             val expenses = repository.getExpenses()
-            val incomes = repository.getIncomes()
 
+            // Prepare the expense categories data
+            val categoryData = mutableMapOf<String, Double>()
 
+            // Categorize expenses
+            expenses.forEach { expense ->
+                categoryData[expense.category] = categoryData.getOrDefault(expense.category, 0.0) + expense.amount
+            }
+
+            // Prepare the PieChart data
+            val pieEntries = categoryData.map { (category, amount) ->
+                PieEntry(amount.toFloat(), category)
+            }
+
+            // Update the PieChart in the UI
+            updatePieChart(pieEntries)
         }
-
     }
 
     override fun onCreateView(
@@ -47,26 +47,23 @@ class AnalysisFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_analysis, container, false)
+        val view = inflater.inflate(R.layout.fragment_analysis, container, false)
+
+        // Initialize the PieChart
+        pieChart = view.findViewById(R.id.pieChart)
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AnalysisFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AnalysisFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    // Function to update the PieChart
+    private fun updatePieChart(entries: List<PieEntry>) {
+        val pieDataSet = PieDataSet(entries, " Expense Categories")
+        pieDataSet.setColors(*com.github.mikephil.charting.utils.ColorTemplate.MATERIAL_COLORS)  // Set colors
+        pieDataSet.valueTextColor = android.graphics.Color.BLACK
+        pieDataSet.valueTextSize = 14f
+
+        val pieData = PieData(pieDataSet)
+        pieChart.data = pieData
+        pieChart.invalidate() // Refresh the chart
     }
 }

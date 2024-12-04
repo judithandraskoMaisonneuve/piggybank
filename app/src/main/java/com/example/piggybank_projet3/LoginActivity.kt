@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToDashboard() {
-        val intent = Intent(this, DashboardActivity::class.java)
+        val intent = Intent(this, FragmentHolderActivity::class.java)
         startActivity(intent)
         finish() // Prevent returning to LoginActivity
     }

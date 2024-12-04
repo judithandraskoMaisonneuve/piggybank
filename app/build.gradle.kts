@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
-
 }
 
 android {
@@ -28,10 +27,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -40,15 +41,15 @@ android {
 dependencies {
     // FIREBASE DEPENDENCIES
     implementation(platform(libs.firebase.bom))
-        // Authentification
+    // Authentification
     implementation("com.google.firebase:firebase-auth-ktx")
-        // Google
+    // Google
     implementation("com.google.android.gms:play-services-auth:21.2.0")
-        // Database
+    // Database
     implementation("com.google.firebase:firebase-firestore")
 
     // Implementation MPAndroidChart
-
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

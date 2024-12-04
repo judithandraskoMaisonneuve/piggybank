@@ -1,27 +1,24 @@
-package com.example.piggybank_projet3
+package com.example.piggybank_projet3.ui.dashboard
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.piggybank_projet3.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
-import android.widget.Spinner
 
-
-class DashboardActivity : AppCompatActivity() {
+class DashboardFragment : Fragment() {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -36,38 +33,37 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var expenseAdapter: ExpenseAdapter
     private lateinit var incomeAdapter: IncomeAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
-
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
         // Goals RecyclerView
-        val rvGoals = findViewById<RecyclerView>(R.id.rvGoals)
-        val btnAddGoal = findViewById<ImageButton>(R.id.btnAddGoal)
+        val rvGoals = view.findViewById<RecyclerView>(R.id.rvGoals)
+        val btnAddGoal = view.findViewById<ImageButton>(R.id.btnAddGoal)
 
         goalAdapter = GoalAdapter(goals)
-        rvGoals.layoutManager = LinearLayoutManager(this)
+        rvGoals.layoutManager = LinearLayoutManager(requireContext())
         rvGoals.adapter = goalAdapter
 
         // Expenses RecyclerView
-        val rvExpenses = findViewById<RecyclerView>(R.id.rvExpenses)
-        val btnAddExpense = findViewById<ImageButton>(R.id.btnAddExpense)
+        val rvExpenses = view.findViewById<RecyclerView>(R.id.rvExpenses)
+        val btnAddExpense = view.findViewById<ImageButton>(R.id.btnAddExpense)
 
         expenseAdapter = ExpenseAdapter(expenses)
-        rvExpenses.layoutManager = LinearLayoutManager(this)
+        rvExpenses.layoutManager = LinearLayoutManager(requireContext())
         rvExpenses.adapter = expenseAdapter
 
         // Incomes RecyclerView
-        val rvIncomes = findViewById<RecyclerView>(R.id.rvIncomes)
-        val btnAddIncome = findViewById<ImageButton>(R.id.btnAddIncome)
+        val rvIncomes = view.findViewById<RecyclerView>(R.id.rvIncomes)
+        val btnAddIncome = view.findViewById<ImageButton>(R.id.btnAddIncome)
 
         incomeAdapter = IncomeAdapter(incomes)
-        rvIncomes.layoutManager = LinearLayoutManager(this)
+        rvIncomes.layoutManager = LinearLayoutManager(requireContext())
         rvIncomes.adapter = incomeAdapter
 
         // Load data
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             loadGoals()
             loadExpenses()
             loadIncomes()
@@ -77,6 +73,8 @@ class DashboardActivity : AppCompatActivity() {
         btnAddGoal.setOnClickListener { showAddGoalDialog() }
         btnAddExpense.setOnClickListener { showAddExpenseDialog() }
         btnAddIncome.setOnClickListener { showAddIncomeDialog() }
+
+        return view
     }
 
     private suspend fun loadGoals() {
@@ -102,7 +100,7 @@ class DashboardActivity : AppCompatActivity() {
         if (newIncomes != incomes) {
             incomes.clear()
             incomes.addAll(newIncomes)
-            incomeAdapter.notifyDataSetChanged() // Make sure to update the adapter
+            incomeAdapter.notifyDataSetChanged()
         }
     }
 
@@ -112,7 +110,30 @@ class DashboardActivity : AppCompatActivity() {
         val goalDeadlineInput = dialogView.findViewById<EditText>(R.id.goal_deadline_input)
         val goalAmountInput = dialogView.findViewById<EditText>(R.id.goal_amount_input)
 
-        AlertDialog.Builder(this)
+        // Set default date (6 months from now)
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.MONTH, 6)  // Add 6 months
+        val defaultDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+        goalDeadlineInput.setText(defaultDate)
+
+        // Date picker for goal deadline
+        goalDeadlineInput.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                { _, year, month, dayOfMonth ->
+                    // Format the selected date as YYYY-MM-DD
+                    val selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
+                    goalDeadlineInput.setText(selectedDate)  // Set the selected date
+                },
+                calendar.get(Calendar.YEAR),  // Default year
+                calendar.get(Calendar.MONTH),  // Default month (6 months from now)
+                calendar.get(Calendar.DAY_OF_MONTH)  // Default day
+            )
+            datePickerDialog.show()
+        }
+
+        // Show the dialog
+        AlertDialog.Builder(requireContext())
             .setTitle("Add Goal")
             .setView(dialogView)
             .setPositiveButton("Add") { _, _ ->
@@ -125,12 +146,13 @@ class DashboardActivity : AppCompatActivity() {
                     val newGoal = Goal("", name, deadline, amount, progress)
                     saveGoalToFirestore(newGoal)
                 } else {
-                    Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Cancel", null)
             .show()
     }
+
 
     private fun showAddExpenseDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_expense, null)
@@ -149,7 +171,7 @@ class DashboardActivity : AppCompatActivity() {
         expenseDateInput.setOnClickListener {
             val calendar = Calendar.getInstance()
             val datePickerDialog = DatePickerDialog(
-                this,
+                requireContext(),
                 { _, year, month, dayOfMonth ->
                     val selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
                     expenseDateInput.setText(selectedDate)
@@ -163,7 +185,7 @@ class DashboardActivity : AppCompatActivity() {
 
         // Set up category spinner with predefined and custom options
         val categories = listOf("Utilities", "Fun", "Food", "Transportation", "Other", "Add Custom")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         categorySpinner.adapter = adapter
 
@@ -180,7 +202,7 @@ class DashboardActivity : AppCompatActivity() {
         })
 
         // Show the dialog
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(requireContext())
             .setTitle("Add Expense")
             .setView(dialogView)
             .setPositiveButton("Add") { _, _ ->
@@ -198,7 +220,7 @@ class DashboardActivity : AppCompatActivity() {
                     val newExpense = Expense("", name, date, selectedCategory, amount)
                     saveExpenseToFirestore(newExpense)
                 } else {
-                    Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -220,7 +242,7 @@ class DashboardActivity : AppCompatActivity() {
         incomeDateInput.setOnClickListener {
             val calendar = Calendar.getInstance()
             val datePickerDialog = DatePickerDialog(
-                this,
+                requireContext(),
                 { _, year, month, dayOfMonth ->
                     // Format the selected date as yyyy-MM-dd
                     val selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
@@ -233,7 +255,7 @@ class DashboardActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(requireContext())
             .setTitle("Add Income")
             .setView(dialogView)
             .setPositiveButton("Add") { _, _ ->
@@ -245,7 +267,7 @@ class DashboardActivity : AppCompatActivity() {
                     val newIncome = Income("", name, date, amount)
                     saveIncomeToFirestore(newIncome)
                 } else {
-                    Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -267,10 +289,10 @@ class DashboardActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 goals.add(goalWithId)
                 goalAdapter.notifyDataSetChanged()
-                Toast.makeText(this, "Goal added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Goal added successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to add goal: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to add goal: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -288,10 +310,10 @@ class DashboardActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 expenses.add(expenseWithId)
                 expenseAdapter.notifyDataSetChanged()
-                Toast.makeText(this, "Expense added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Expense added successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to add expense: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to add expense: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -309,10 +331,10 @@ class DashboardActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 incomes.add(incomeWithId)
                 incomeAdapter.notifyDataSetChanged()
-                Toast.makeText(this, "Income added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Income added successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to add income: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to add income: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
