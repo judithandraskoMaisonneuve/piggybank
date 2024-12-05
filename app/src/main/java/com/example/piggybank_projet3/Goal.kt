@@ -5,5 +5,6 @@ data class Goal(
     val name: String = "",
     val deadline: String = "",
     val amountNeeded: Double = 0.0,
-    val progress: Double = 0.0
+    val progress: Double = 0.0,
+    var savedAmount: Double = 0.0
 )

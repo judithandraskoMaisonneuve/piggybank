@@ -274,6 +274,88 @@ class DashboardFragment : Fragment() {
             .show()
     }
 
+    private fun showGoalDetailsDialog(goal: Goal) {
+        // Inflate the goal details dialog layout
+        val dialogView = layoutInflater.inflate(R.layout.dialog_goal_details, null)
+
+        // Bind views from the layout
+        val goalNameTextView = dialogView.findViewById<TextView>(R.id.goal_name)
+        val progressBar = dialogView.findViewById<ProgressBar>(R.id.progress_bar)
+        val goalAmountTextView = dialogView.findViewById<TextView>(R.id.goal_amount)
+        val moneySavedInput = dialogView.findViewById<EditText>(R.id.money_saved_input)
+        val btnDeleteGoal = dialogView.findViewById<Button>(R.id.btn_delete_goal)
+
+        // Set goal details in the dialog
+        goalNameTextView.text = goal.name
+        goalAmountTextView.text = "Total Goal: $${goal.amountNeeded}"
+        moneySavedInput.setText(goal.savedAmount.toString())
+        progressBar.progress = ((goal.savedAmount / goal.amountNeeded) * 100).toInt()
+
+        // Set Delete Button Click Listener
+        btnDeleteGoal.setOnClickListener {
+            deleteGoal(goal)  // Call the function to delete the goal
+        }
+
+        // Show the dialog
+        AlertDialog.Builder(requireContext())
+            .setTitle("Goal Details")
+            .setView(dialogView)
+            .setPositiveButton("Save") { _, _ ->
+                // Save the updated saved amount
+                val newSavedAmount = moneySavedInput.text.toString().toDoubleOrNull()
+                if (newSavedAmount != null && newSavedAmount >= 0) {
+                    val updatedGoal = goal.copy(savedAmount = newSavedAmount)
+                    updateGoalInFirestore(updatedGoal)  // Call a function to update goal in Firestore
+                } else {
+                    Toast.makeText(requireContext(), "Please enter a valid amount", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    // Function to delete the goal from Firestore
+    private fun deleteGoal(goal: Goal) {
+        val userId = auth.currentUser?.uid ?: return
+
+        firestore.collection("Users")
+            .document(userId)
+            .collection("goals")
+            .document(goal.id_goal)
+            .delete()
+            .addOnSuccessListener {
+                // Remove from local list and update UI
+                goals.remove(goal)
+                goalAdapter.notifyDataSetChanged()
+                Toast.makeText(requireContext(), "Goal deleted successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Failed to delete goal: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    // Function to update the goal in Firestore
+    private fun updateGoalInFirestore(goal: Goal) {
+        val userId = auth.currentUser?.uid ?: return
+
+        firestore.collection("Users")
+            .document(userId)
+            .collection("goals")
+            .document(goal.id_goal)
+            .set(goal)
+            .addOnSuccessListener {
+                // Update local list and notify adapter
+                goals.find { it.id_goal == goal.id_goal }?.apply {
+                    savedAmount = goal.savedAmount
+                }
+                goalAdapter.notifyDataSetChanged()
+                Toast.makeText(requireContext(), "Goal updated successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Failed to update goal: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
 
     private fun saveGoalToFirestore(goal: Goal) {
         val userId = auth.currentUser?.uid ?: return
@@ -337,4 +419,6 @@ class DashboardFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed to add income: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
+
 }
