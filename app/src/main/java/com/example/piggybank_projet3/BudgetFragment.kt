@@ -19,9 +19,12 @@ class BudgetFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_budget, container, false)
 
-        // Initialize RecyclerView
+        // Initialize RecyclerViews
         val budgetRecyclerView: RecyclerView = view.findViewById(R.id.rvBudget)
         budgetRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        val tipsRecyclerView: RecyclerView = view.findViewById(R.id.rvTips)
+        tipsRecyclerView.layoutManager = LinearLayoutManager(context)
 
         // Load data asynchronously
         lifecycleScope.launch {
@@ -37,11 +40,38 @@ class BudgetFragment : Fragment() {
                 )
             )
 
-            // Set up adapter
+            // Set up budget adapter
             val budgetAdapter = BudgetAdapter(budgetItems, requireContext())
             budgetRecyclerView.adapter = budgetAdapter
-        }
 
+            // Create a list of financial tips
+            val financialTips = listOf(
+                Tip(
+                    title = "Track Your Expenses",
+                    description = "Keep a close eye on where your money is going to identify areas to save.",
+                    url = "https://www.canada.ca/en/financial-consumer-agency/services/covid-19-managing-financial-health.html"
+                ),
+                Tip(
+                    title = "Set Realistic Goals",
+                    description = "Start with small, achievable financial goals and gradually work your way up.",
+                    url = "https://www.canada.ca/en/financial-consumer-agency/services/covid-19-managing-financial-health.html"
+                ),
+                Tip(
+                    title = "Emergency Fund",
+                    description = "Having an emergency fund can help you manage unforeseen expenses.",
+                    url = "https://www.canada.ca/en/financial-consumer-agency/services/covid-19-managing-financial-health.html"
+                ),
+                Tip(
+                    title = "Cut Unnecessary Spending",
+                    description = "Review your monthly expenses and cut back on non-essential items.",
+                    url = "https://www.canada.ca/en/financial-consumer-agency/services/covid-19-managing-financial-health.html"
+                )
+            )
+
+            // Set up Tip adapter
+            val tipAdapter = TipAdapter(financialTips, requireContext())
+            tipsRecyclerView.adapter = tipAdapter
+        }
 
         return view
     }

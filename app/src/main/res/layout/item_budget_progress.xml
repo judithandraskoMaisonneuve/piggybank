@@ -5,52 +5,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".YourActivity">
 
-    <TextView
-        android:id="@+id/tvTittleBudget"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/actor"
-        android:text="Budget Progress Title"
-        android:textColor="#000"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ProgressBar
-        android:id="@+id/progressBarBudget"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="16dp"
-        android:layout_marginTop="8dp"
-        android:max="100"
-        android:progress="50"
-        android:progressDrawable="@drawable/progress_bar_expenses_green"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTittleBudget" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarBudget"
-        tools:layout_editor_absoluteX="4dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvTotalIncome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="14dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/progressBarBudget"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+            <!-- Title Text -->
+            <TextView
+                android:id="@+id/tvTittleBudget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/actor"
+                android:text="Budget Progress Title"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBarBudget"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginTop="12dp"
+                android:max="100"
+                android:progress="50"
+                android:progressDrawable="@drawable/progress_bar_expenses_green" />
+
+            <TextView
+                android:id="@+id/tvTotalIncome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Income: $1000"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_gravity="end"
+                android:layout_alignParentEnd="true"
+                android:gravity="end" />
+
+            <!-- Description Text -->
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:lineSpacingExtra="4dp"
+                android:text="TextView"
+                android:textColor="#555"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

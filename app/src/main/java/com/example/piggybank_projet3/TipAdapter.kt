@@ -33,9 +33,8 @@ class TipAdapter(
         holder.description.text = tip.description
 
         holder.moreInfo.setOnClickListener {
-            // Example external link for more information
-            val url = "https://www.example.com/financial-tips"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            // Open the URL in the browser when "Learn More" is clicked
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tip.url))
             context.startActivity(intent)
         }
     }
@@ -43,4 +42,4 @@ class TipAdapter(
     override fun getItemCount(): Int = tips.size
 }
 
-data class Tip(val title: String, val description: String)
+data class Tip(val title: String, val description: String, val url: String)

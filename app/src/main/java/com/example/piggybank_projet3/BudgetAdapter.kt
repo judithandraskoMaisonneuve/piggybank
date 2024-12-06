@@ -17,6 +17,8 @@ class BudgetAdapter(
     class BudgetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.tvTittleBudget)
         val progressBar: ProgressBar = itemView.findViewById(R.id.progressBarBudget)
+        val totalIncome: TextView = itemView.findViewById(R.id.tvTotalIncome)
+        val description: TextView = itemView.findViewById(R.id.description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetViewHolder {
@@ -32,16 +34,26 @@ class BudgetAdapter(
         } else 0
 
         holder.title.text = budgetItem.title
+        holder.totalIncome.text = "$${budgetItem.income}" // Use string templates
         holder.progressBar.progress = percentage
 
         // Change progress bar color based on percentage
         when {
-            percentage <= 70 -> holder.progressBar.progressDrawable =
-                ContextCompat.getDrawable(context, R.drawable.progress_bar_expenses_green)
-            percentage in 71..90 -> holder.progressBar.progressDrawable =
-                ContextCompat.getDrawable(context, R.drawable.progress_bar_expenses_orange)
-            else -> holder.progressBar.progressDrawable =
-                ContextCompat.getDrawable(context, R.drawable.progress_bar_expenses_red)
+            percentage <= 60 -> {
+                holder.progressBar.progressDrawable =
+                    ContextCompat.getDrawable(context, R.drawable.progress_bar_expenses_green)
+                holder.description.text = "You're in the green! \nYou have spent 60% or less of your income."
+            }
+            percentage in 61..80 -> {
+                holder.progressBar.progressDrawable =
+                    ContextCompat.getDrawable(context, R.drawable.progress_bar_expenses_orange)
+                holder.description.text = "Careful! \nYou have spent more than 60% of your income."
+            }
+            else -> {
+                holder.progressBar.progressDrawable =
+                    ContextCompat.getDrawable(context, R.drawable.progress_bar_expenses_red)
+                holder.description.text = "Woah there! \nYou have spent more than 80% of your income."
+            }
         }
     }
 
