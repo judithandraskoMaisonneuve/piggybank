@@ -29,18 +29,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/piggybank" />
 
-    <!-- User Profile Picture -->
-    <ImageView
-        android:id="@+id/ivUserPfp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/profile_pic_border"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/imageView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+    <!-- User Profile Picture (Avatar) -->
 
     <!-- User Details Section -->
     <TextView
@@ -48,14 +37,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
         android:text="First Name"
         android:textColor="#333333"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivUserPfp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <EditText
         android:id="@+id/etFirstName"
@@ -122,22 +111,25 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="user@example.com"
-    android:background="@drawable/rounded_edittext"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:focusable="false"
-    android:clickable="false"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tvEmailLabel" />
+        android:background="@drawable/rounded_edittext"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:focusable="false"
+        android:clickable="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEmailLabel" />
 
-    <!-- Modify Nickname Button -->
+    <!-- Save Modifications Button -->
+
+    <!-- Log Out Button (ImageButton) -->
+
     <Button
         android:id="@+id/btnSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#009688"
         android:text="Save Modifications"
@@ -147,5 +139,33 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+
+    <ImageButton
+        android:id="@+id/btnLogOut"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="347dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Log Out"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:tint="@color/lightgrey" />
+
+    <TextView
+        android:id="@+id/logouttv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/actor"
+        android:text="LogOut"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnLogOut"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.piggybank_projet3
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ class SettingsFragment : Fragment() {
     private lateinit var etLastName: EditText
     private lateinit var tvEmail: TextView
     private lateinit var btnSave: Button
+    private lateinit var btnLogOut: ImageButton
 
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -33,6 +36,7 @@ class SettingsFragment : Fragment() {
         etLastName = view.findViewById(R.id.etLastName)
         tvEmail = view.findViewById(R.id.tvEmail)
         btnSave = view.findViewById(R.id.btnSave)
+        btnLogOut = view.findViewById(R.id.btnLogOut)
 
         // Pre-populate fields with current user information
         populateUserInfo()
@@ -41,6 +45,18 @@ class SettingsFragment : Fragment() {
         btnSave.setOnClickListener {
             updateUserInfo()
         }
+
+
+        btnLogOut.setOnClickListener {
+            // Sign out the user from Firebase
+            auth.signOut()
+            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+            // Redirect to login screen (or any other action)
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish() // Close the settings fragment and go back to login
+        }
+
 
         return view
     }
@@ -67,6 +83,8 @@ class SettingsFragment : Fragment() {
             Toast.makeText(requireContext(), "No user is logged in", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 
     // This function will be called when the user clicks the "Save Modifications" button.
     private fun updateUserInfo() {
