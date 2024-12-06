@@ -136,11 +136,7 @@ class SignupActivity : AppCompatActivity() {
             "lastname" to lastname,
             "firstname" to firstname,
             "email" to email,
-            "language" to "English",
-            "id_income" to null,
-            "id_expense" to null,
-            "id_budget" to null,
-            "id_goal" to null
+            "language" to "English"
         )
 
         firestore.collection("Users").document(userId)

@@ -31,7 +31,7 @@
             app:tint="@android:color/white" />
 
         <ImageButton
-            android:id="@+id/btn_goals"
+            android:id="@+id/btn_budget"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="24dp"

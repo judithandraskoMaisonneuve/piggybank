@@ -65,8 +65,10 @@ class ChartAdapter(private val chartItems: List<ChartItem>) :
     // ViewHolder for PieChart
     class PieChartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val pieChart: PieChart = itemView.findViewById(R.id.pieChart)
+        private val titleTextView: TextView = itemView.findViewById(R.id.titlepiechart)
 
         fun bind(item: ChartItem.PieChartItem) {
+            titleTextView.text = "Expense Categories Overview"
             // Bind data to PieChart
             val categoryData = item.expenses.groupBy { it.category }.mapValues { entry ->
                 entry.value.sumOf { it.amount }
@@ -91,8 +93,10 @@ class ChartAdapter(private val chartItems: List<ChartItem>) :
     // ViewHolder for BarChart
     class BarChartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val barChart: BarChart = itemView.findViewById(R.id.barChart)
+        private val titleTextView: TextView = itemView.findViewById(R.id.barcharttitle)
 
         fun bind(item: ChartItem.BarChartItem) {
+            titleTextView.text = "Budget Overview"
             // Group expenses and income by month
             val incomeMap = item.income.groupBy { it.date.substring(0, 7) }
                 .mapValues { (_, list) -> list.sumOf { it.amount } }

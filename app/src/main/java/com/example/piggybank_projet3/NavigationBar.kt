@@ -17,14 +17,14 @@ class NavigationBar(private val context: Context, private val fragmentManager: F
             navigateToFragment(AnalysisFragment())
         }
 
-        // Uncomment for additional navigation options
-        // view.findViewById<View>(R.id.btn_goals).setOnClickListener {
-        //     navigateToFragment(GoalsFragment())
-        // }
 
-        // view.findViewById<View>(R.id.btn_settings).setOnClickListener {
-        //     navigateToFragment(SettingsFragment())
-        // }
+        view.findViewById<View>(R.id.btn_budget).setOnClickListener {
+            navigateToFragment(BudgetFragment())
+        }
+
+        view.findViewById<View>(R.id.btn_settings).setOnClickListener {
+            navigateToFragment(SettingsFragment())
+        }
     }
 
     fun navigateToFragment(fragment: Fragment) {
